@@ -13,11 +13,11 @@ def main():
     p_d_m.create_patient(patient4)
     t = p_d_m.read_patient()
     for x in t:
-        print(x._name)
-    p_d_m.update_patient(2,"_name","jpeou")
+        print(x._name,x._priority)
+    p_d_m.update_patient(2,"_state",pstate.PatientState.Consulted)
     s = p_d_m.read_patient()
     for z in s:
-        print(z._name)
+        print(z._name,z._priority)
 
 if __name__ == '__main__':
     main()
