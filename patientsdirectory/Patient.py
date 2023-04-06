@@ -1,5 +1,4 @@
 import itertools
-
 class Patient:
     _id_iter = itertools.count()
     def __init__(self, name, age, gender, priority, state, arrival_date):
