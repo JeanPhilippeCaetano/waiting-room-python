@@ -13,7 +13,7 @@ class PatientsManager:
         patients_sorted = sorted(patients_copy, key=(lambda b: b._priority), reverse=True)
         if attribute_type is not None and attribute_value is not None:
             return [patient for patient in patients_sorted if getattr(patient, attribute_type) == attribute_value]
-        return patients_sorted
+        return [patient for patient in patients_sorted if patient._state is pstate.PatientState.Awaiting]
 
     @classmethod
     def update_patient(self, patient_id, attribute_type=None, attribute_value=None):

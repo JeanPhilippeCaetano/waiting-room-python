@@ -1,6 +1,6 @@
 from enum import Enum
 
 class PatientState(Enum):
-    Awaiting = 0
-    InConsultation = 1
-    Consulted = 2
+    Awaiting = "Awaiting"
+    InConsultation = "In Consultation"
+    Consulted = "Consulted"

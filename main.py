@@ -3,10 +3,10 @@ import patientsdirectory.Patient as pt
 import patientsdirectory.PatientState as pstate
 def main():
     p_d_m = pdm.PatientsManager()
-    patient = pt.Patient("test",19,"M",4,pstate.PatientState.Awaiting,"19/05/21")
-    patient2 = pt.Patient("gabite",19,"M",5,pstate.PatientState.Awaiting,"18/05/21")
-    patient3 = pt.Patient("emiliana",19,"M",3,pstate.PatientState.Awaiting,"19/05/21")
-    patient4 = pt.Patient("ttcion",19,"M",5,pstate.PatientState.Awaiting,"19/05/21")
+    patient = pt.Patient("test",19,"M",4,"19/05/21")
+    patient2 = pt.Patient("gabite",19,"M",5,"18/05/21")
+    patient3 = pt.Patient("emiliana",19,"M",3,"19/05/21")
+    patient4 = pt.Patient("ttcion",19,"M",5,"19/05/21")
     p_d_m.create_patient(patient)
     p_d_m.create_patient(patient2)
     p_d_m.create_patient(patient3)
