@@ -1,6 +1,5 @@
 import itertools
 import logging
-import os
 
 logging.basicConfig(filename="logfilehospital.log", level=logging.DEBUG)
 

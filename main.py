@@ -18,6 +18,11 @@ def main():
     s = p_d_m.read_patient()
     for z in s:
         print(z._name,z._priority)
+    from doctorsdirectory.Doctor import Doctor
+
+    doc = Doctor("robert", "Uretrologue")
+
+
 
 if __name__ == '__main__':
     main()
