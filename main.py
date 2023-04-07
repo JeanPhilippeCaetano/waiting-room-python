@@ -1,21 +1,10 @@
 from patientsdirectory.PatientsManager import PatientsManager
 from patientsdirectory.Patient import Patient
 from patientsdirectory.PatientState import PatientState
+from doctorsdirectory.Doctor import Doctor
 import time
 from datetime import datetime
 
-
-def main():
-    fake_activity()
-
-
-    from doctorsdirectory.Doctor import Doctor
-
-    doc = Doctor("robert", "Uretrologue")
-
-
-if __name__ == '__main__':
-    main()
 
 
 def fake_activity():
@@ -46,3 +35,17 @@ def fake_activity():
 
     for patient in PatientsManager.read_patient():
         print(patient._name, patient._priority)
+
+    time.sleep(2)
+
+    doc = Doctor("robert", "Uretrologue")
+
+    time.sleep(2)
+
+    doc2 = Doctor("Mr Seguret", "biologie")
+
+def main():
+    fake_activity()
+
+if __name__ == '__main__':
+    main()
