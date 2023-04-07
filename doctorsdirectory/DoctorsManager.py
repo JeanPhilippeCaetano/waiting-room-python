@@ -16,6 +16,4 @@ class DoctorsManager:
         for doctor in cls._list:
             if doctor.get_id() == doc_id:
                 doctor.update_busy()
-                print(f"Doctor with id {doc_id} found.")
-                print(f"Before update: {doctor._is_busy}")
                 break

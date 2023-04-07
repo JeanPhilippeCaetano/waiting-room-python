@@ -3,6 +3,7 @@ import logging
 
 logging.basicConfig(filename="logfilehospital.log", level=logging.DEBUG)
 
+
 class Doctor:
     _id_iter = itertools.count()
 
@@ -12,7 +13,7 @@ class Doctor:
         self._is_busy = False
         self._speciality = speciality
         logging.info("---------------------- \nDoctor created in register:\nid: " + str(
-            self._id) + "\nname: " + self._name + "\nis busy: " + str(self._is_busy) + "\nspeciality: " + \
+            self._id) + "\nname: " + self._name + "\nis busy: " + str(self._is_busy) + "\nspeciality: " +\
                      self.get_speciality() + "\n-------------------------")
 
     def __str__(self):
