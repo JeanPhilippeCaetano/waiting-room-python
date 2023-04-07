@@ -1,5 +1,5 @@
 import itertools
-from PatientState import PatientState
+from patientsdirectory.PatientState import PatientState
 
 
 class Patient:
@@ -13,7 +13,6 @@ class Patient:
         self._priority = priority
         self._state = PatientState.Awaiting
         self._arrival_date = arrival_date
-        self.current_doctor_id = None
 
     def __str__(self):
         return (

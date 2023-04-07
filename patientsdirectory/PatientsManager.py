@@ -1,4 +1,4 @@
-from PatientState import PatientState
+from patientsdirectory.PatientState import PatientState
 import datetime as dt
 import logging
 

@@ -3,36 +3,15 @@ from flask import Flask, request, jsonify
 from patientsdirectory.Patient import Patient
 from patientsdirectory.PatientsManager import PatientsManager as pm
 from patientsdirectory.PatientState import PatientState as pstate
-from doctorsdirectory.Doctor import Doctor
-from doctorsdirectory.DoctorsManager import DoctorsManager
-
 app = Flask(__name__)
 
-@app.route('/add-doctor', methods=['POST'])
-def add_doctor():
-    # Récupère les données du docteur à partir de la requête
-    doctor_data = request.get_json()
-
-    # Crée un nouveau docteur avec un ID, un nom, une spécialité et une date d'embauche
-    doctor = Doctor(doctor_data['_name'], doctor_data['_specialty'])
-
-    # Ajoute le nouveau docteur à la liste des docteurs
-    DoctorsManager.add_doctor(doctor)
-
-    # Renvoie le nouveau docteur au format JSON
-    return jsonify({
-        '_id': doctor['_id'],
-        '_name': doctor['_name'],
-        '_specialty': doctor['_specialty'],
-        '_busy': doctor['_busy']
-    }), 201
 @app.route('/get-patient/<int:patient_id>', methods=['GET'])
 def get_patient(patient_id):
     # Finds the patient in the list of patients
     patient = pm.read_patient("_id",patient_id)[0]
     # If the patient is not found, returns an error message
     if patient is None:
-        return jsonify({'message': 'Patient not found'}), 40
+        return jsonify({'message': 'Patient not found'}), 404
     # Returns the patient in JSON format
     return jsonify({
         "name":patient._name,
@@ -74,10 +53,6 @@ def get_most_urgent_patient():
     # Change the state of the most urgent patient to 'in consultation'
     pm.update_patient(most_urgent_patient._id, "_state", pstate.InConsultation)
 
-    #data = request.get_json()
-    #DoctorsManager.update_busy_by_id(data['doctor_id'])
-    #    pm.update_doctor_with(most_urgent_patient._id, data['doctor_id'])
-
     # Returns the most urgent patient in JSON format
     return jsonify({
         '_id_patient': most_urgent_patient._id,
@@ -101,10 +76,6 @@ def update_patient(patient_id):
     # Get the updated patient data from the request JSON
     data = request.get_json()
     for key in data.keys():
-        if key == "_state":
-            if data[key] == "Consulted":
-                pm.update_patient(patient_id, "_state", pstate.Consulted)
-                #DoctorsManager.update_busy_by_id(patient.current_doctor_id)
         pm.update_patient(patient_id, key, data[key])
         setattr(patient, key, data[key])
     # Return the updated patient information with status code 200
