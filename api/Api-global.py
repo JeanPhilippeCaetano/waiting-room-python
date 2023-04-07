@@ -14,18 +14,16 @@ def add_doctor():
     doctor_data = request.get_json()
 
     # Crée un nouveau docteur avec un ID, un nom, une spécialité et une date d'embauche
-    doctor = Doctor(doctor_data['_name'], doctor_data['_specialty'])
+    doctor = Doctor(doctor_data['name'], doctor_data['specialty'])
 
     # Ajoute le nouveau docteur à la liste des docteurs
     DoctorsManager.add_doctor(doctor)
 
     # Renvoie le nouveau docteur au format JSON
-    return jsonify({
-        '_id': doctor['_id'],
-        '_name': doctor['_name'],
-        '_specialty': doctor['_specialty'],
-        '_busy': doctor['_busy']
-    }), 201
+    return jsonify("Status : Done"), 201
+
+
+
 @app.route('/get-patient/<int:patient_id>', methods=['GET'])
 def get_patient(patient_id):
     # Finds the patient in the list of patients
@@ -74,9 +72,9 @@ def get_most_urgent_patient():
     # Change the state of the most urgent patient to 'in consultation'
     pm.update_patient(most_urgent_patient._id, "_state", pstate.InConsultation)
 
-    #data = request.get_json()
-    #DoctorsManager.update_busy_by_id(data['doctor_id'])
-    #    pm.update_doctor_with(most_urgent_patient._id, data['doctor_id'])
+    data = request.get_json()
+    DoctorsManager.update_busy_by_id(data['doctor_id'])
+    pm.update_doctor_with(most_urgent_patient._id, data['doctor_id'])
 
     # Returns the most urgent patient in JSON format
     return jsonify({
