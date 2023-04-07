@@ -1,62 +1,79 @@
 import unittest
-import Doctor
-import DoctorsManager
+from Doctor import Doctor
+from DoctorsManager import DoctorsManager
 
 
-class MyTestCase(unittest.TestCase):
-    def test_doctor_properties(self):
-        doc = Doctor("John Smith", "Cardiology")
-        self.assertEqual(doc._name, "John Smith")
-        self.assertEqual(doc._speciality, "Cardiology")
-        self.assertFalse(doc._is_busy)
-
-    def test_doctor_update_busy(self):
-        doc = Doctor("John Smith", "Cardiology")
-        self.assertFalse(doc._is_busy)
-        doc.update_busy()
-        self.assertTrue(doc._is_busy)
-        doc.update_busy()
-        self.assertFalse(doc._is_busy)
-
-    def test_doctor_get_id(self):
-        doc1 = Doctor("John Smith", "Cardiology")
-        doc2 = Doctor("Jane Doe", "Neurology")
-        self.assertNotEqual(doc1.get_id(), doc2.get_id())
-
-    def setUp(self):
-        self.doc1 = Doctor("John Smith", "Cardiology")
-        self.doc2 = Doctor("Jane Doe", "Neurology")
-        self.doc3 = Doctor("Bob Johnson", "Cardiology")
-        DoctorsManager.add_doctor(self.doc1)
-        DoctorsManager.add_doctor(self.doc2)
-        DoctorsManager.add_doctor(self.doc3)
-
-    def tearDown(self):
-        DoctorsManager._list = None
-
-    def test_get_doctors_with_speciality(self):
-        cardiology_doctors = DoctorsManager.get_doctors("Cardiology")
-        neurology_doctors = DoctorsManager.get_doctors("Neurology")
-        self.assertEqual(len(cardiology_doctors), 2)
-        self.assertEqual(len(neurology_doctors), 1)
-
-    def test_get_all_doctors(self):
-        all_doctors = DoctorsManager.get_doctors()
-        self.assertEqual(len(all_doctors), 3)
+class TestDoctor(unittest.TestCase):
+    def test_init(self):
+        doctor = Doctor("John Doe", "Pediatrics")
+        self.assertEqual(doctor._name, "John Doe")
+        self.assertEqual(doctor._speciality, "Pediatrics")
+        self.assertFalse(doctor._is_busy)
 
     def test_update_busy(self):
-        self.assertFalse(self.doc1._is_busy)
-        DoctorsManager.update_busy(self.doc1.get_id())
-        self.assertTrue(self.doc1._is_busy)
-        DoctorsManager.update_busy(self.doc1.get_id())
-        self.assertFalse(self.doc1._is_busy)
+        doctor = Doctor("John Doe", "Pediatrics")
+        doctor.update_busy()
+        self.assertTrue(doctor._is_busy)
+        doctor.update_busy()
+        self.assertFalse(doctor._is_busy)
+
+    def test_get_id(self):
+        doctor1 = Doctor("John Doe", "Pediatrics")
+        doctor2 = Doctor("Jane Smith", "Cardiology")
+        self.assertEqual(doctor1.get_id(), 0)
+        self.assertEqual(doctor2.get_id(), 1)
+
+
+class TestDoctorsManager(unittest.TestCase):
+    def setUp(self):
+        DoctorsManager._list = []
+
+    def test_get_doctors(self):
+        doctor1 = Doctor("John Doe", "Pediatrics")
+        doctor2 = Doctor("Jane Smith", "Cardiology")
+        DoctorsManager.add_doctor(doctor1)
+        DoctorsManager.add_doctor(doctor2)
+
+        # Test with no speciality specified
+        doctors = DoctorsManager.get_doctors()
+        self.assertEqual(len(doctors), 2)
+        self.assertIn(doctor1, doctors)
+        self.assertIn(doctor2, doctors)
+
+        # Test with "Pediatrics" speciality specified
+        doctors = DoctorsManager.get_doctors(speciality="Pediatrics")
+        self.assertEqual(len(doctors), 1)
+        self.assertIn(doctor1, doctors)
+        self.assertNotIn(doctor2, doctors)
+
+        # Test with "Cardiology" speciality specified
+        doctors = DoctorsManager.get_doctors(speciality="Cardiology")
+        self.assertEqual(len(doctors), 1)
+        self.assertNotIn(doctor1, doctors)
+        self.assertIn(doctor2, doctors)
+
+    def test_add_doctor(self):
+        doctor = Doctor("John Doe", "Pediatrics")
+        DoctorsManager.add_doctor(doctor)
+        self.assertIn(doctor, DoctorsManager._list)
+
+    def test_update_busy(self):
+        doctor1 = Doctor("John Doe", "Pediatrics")
+        doctor2 = Doctor("Jane Smith", "Cardiology")
+        DoctorsManager.add_doctor(doctor1)
+        DoctorsManager.add_doctor(doctor2)
+
+        # Test updating a doctor who is not busy
+        DoctorsManager.update_busy_by_id(7)
+        self.assertTrue(doctor1._is_busy)
+
+        # Test updating a doctor who is already busy
+        DoctorsManager.update_busy_by_id(7)
+        self.assertFalse(doctor1._is_busy)
+
+        # Test updating a doctor who does not exist
+        DoctorsManager.update_busy_by_id(3)  # no doctor with id 3
 
 
 if __name__ == '__main__':
     unittest.main()
-
-# Doc1 = Doctor("Jean Gontrand", "Cardiologue")
-# Doc2 = Doctor("Eric Zoo", "Uretrologue")
-# print(Doc1)
-# test_list = [Doc1, Doc2]
-# print(next((x for x in test_list if x.get_id() == 1), None))

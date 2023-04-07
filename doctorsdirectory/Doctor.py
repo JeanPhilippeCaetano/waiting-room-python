@@ -20,5 +20,6 @@ class Doctor:
     def get_id(self):
         return self._id
 
-
+    def get_speciality(self):
+        return self._speciality
 
