@@ -19,4 +19,3 @@ class DoctorsManager:
                 print(f"Doctor with id {doc_id} found.")
                 print(f"Before update: {doctor._is_busy}")
                 break
-
