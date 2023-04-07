@@ -19,7 +19,7 @@ class DoctorsManager:
     @classmethod
     def add_doctor(cls, doctor):
         cls._list.append(doctor)
-        logging.info("\nDoctor created in register:" + date_string + \
+        logging.info("\nDOCTOR CREATED IN REGISTER:" + date_string + \
                      doctor.__str__() + \
                      "\n-------------------------\n")
 
@@ -28,7 +28,7 @@ class DoctorsManager:
         for doctor in cls._list:
             if doctor.get_id() == doc_id:
                 doctor.update_busy()
-                logging.info("\nDoctor changed state:" + date_string + \
+                logging.info("\nDOCTOR CHANGED STATE:" + date_string + \
                              "\nName: " + doctor._name + \
                              "\nIs busy: " + doctor._is_busy + \
                              "\n-------------------------\n")

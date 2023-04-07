@@ -14,7 +14,7 @@ class PatientsManager:
     @classmethod
     def create_patient(self, patient):
         self._patients.append(patient)
-        logging.info("\nPatient created in register: " + date_string + \
+        logging.info("\nPATIENT CREATED IN REGISTER: " + date_string + \
                      patient.__str__() + \
                      "\n-------------------------\n")
 
@@ -35,7 +35,7 @@ class PatientsManager:
                     if patient_id is not patient._id:
                         old_priority = patient._priority
                         patient._priority += 1
-                        logging.info("\nPatient priority changed: " + date_string + \
+                        logging.info("\nPATIENT PRIORITY CHANGED: " + date_string + \
                                      "\nName: " + patient._name + \
                                      "\nOld priority: " + str(old_priority) + \
                                      "\nPriority: " + str(patient._priority) + \
@@ -45,7 +45,7 @@ class PatientsManager:
     def delete_patient(self, patient_id):
         patient = self.read_patient("_id",patient_id)
         self._patients.pop(patient_id)
-        logging.info("\nPatient deleted: " + date_string + \
+        logging.info("\nPATIENT DELETED: " + date_string + \
                      "\nName: " + patient._name + \
                      "\nPriority: " + str(patient._priority) + \
                      "\n-------------------------\n")
