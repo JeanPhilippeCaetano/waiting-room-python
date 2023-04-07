@@ -1,6 +1,8 @@
 import unittest
 from Doctor import Doctor
 from DoctorsManager import DoctorsManager
+import datetime as dt
+
 
 
 class TestDoctor(unittest.TestCase):

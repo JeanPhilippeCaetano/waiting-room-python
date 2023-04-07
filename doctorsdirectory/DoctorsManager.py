@@ -1,3 +1,12 @@
+import logging
+import datetime as dt
+
+logging.basicConfig(filename="logfilehospital.log", level=logging.DEBUG)
+
+now = dt.datetime.now()
+# Convert the datetime.datetime object to a string in the format 'YYYY-MM-DD HH:MM:SS'
+date_string = now.strftime('%Y-%m-%d %H:%M:%S')
+
 class DoctorsManager:
     _list = []
 
@@ -10,12 +19,17 @@ class DoctorsManager:
     @classmethod
     def add_doctor(cls, doctor):
         cls._list.append(doctor)
+        logging.info("\nDoctor created in register:" + date_string + \
+                     doctor.__str__() + \
+                     "\n-------------------------")
 
     @classmethod
     def update_busy_by_id(cls, doc_id):
         for doctor in cls._list:
             if doctor.get_id() == doc_id:
                 doctor.update_busy()
-                print(f"Doctor with id {doc_id} found.")
-                print(f"Before update: {doctor._is_busy}")
+                logging.info("\nDoctor changed state:" + date_string + \
+                             "\nName: " + doctor._name + \
+                             "\nIs busy: " + doctor._is_busy + \
+                             "\n-------------------------")
                 break

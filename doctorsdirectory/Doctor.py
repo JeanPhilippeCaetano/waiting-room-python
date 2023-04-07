@@ -1,5 +1,6 @@
 import itertools
 import logging
+import datetime as dt
 
 logging.basicConfig(filename="logfilehospital.log", level=logging.DEBUG)
 
@@ -11,14 +12,13 @@ class Doctor:
         self._id = next(Doctor._id_iter)
         self._is_busy = False
         self._speciality = speciality
-        logging.info("---------------------- \nDoctor created in register:\nid: " + str(
-            self._id) + "\nname: " + self._name + "\nis busy: " + str(self._is_busy) + "\nspeciality: " + \
-                     self.get_speciality() + "\n-------------------------")
 
     def __str__(self):
-        return "id: " + str(
-            self._id) + "\nname: " + self._name + "\nis busy: " + str(
-            self._is_busy) + "\nspeciality: " + self.get_speciality() + "\n"
+        return (
+            "\nid: " + str(self._id) + \
+            "\nname: " + self._name + \
+            "\nis busy: " + str(self._is_busy) + \
+            "\nspeciality: " + self.get_speciality())
 
     def update_busy(self):
         self._is_busy = not self._is_busy
