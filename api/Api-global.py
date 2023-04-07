@@ -3,6 +3,9 @@ from flask import Flask, request, jsonify
 from patientsdirectory.Patient import Patient
 from patientsdirectory.PatientsManager import PatientsManager as pm
 from patientsdirectory.PatientState import PatientState as pstate
+from doctorsdirectory.Doctor import Doctor
+from doctorsdirectory.DoctorsManager import DoctorsManager
+
 app = Flask(__name__)
 
 @app.route('/get-patient/<int:patient_id>', methods=['GET'])
@@ -53,6 +56,10 @@ def get_most_urgent_patient():
     # Change the state of the most urgent patient to 'in consultation'
     pm.update_patient(most_urgent_patient._id, "_state", pstate.InConsultation)
 
+    data = request.get_json()
+    DoctorsManager.update_busy_by_id(data['doctor_id'])
+    pm.update_doctor_with(most_urgent_patient._id, data['doctor_id'])
+
     # Returns the most urgent patient in JSON format
     return jsonify({
         '_id_patient': most_urgent_patient._id,
@@ -76,6 +83,10 @@ def update_patient(patient_id):
     # Get the updated patient data from the request JSON
     data = request.get_json()
     for key in data.keys():
+        if key == "_state":
+            if data[key] == "Consulted":
+                pm.update_patient(patient_id, "_state", pstate.Consulted)
+                DoctorsManager.update_busy_by_id(patient.current_doctor_id)
         pm.update_patient(patient_id, key, data[key])
         setattr(patient, key, data[key])
     # Return the updated patient information with status code 200

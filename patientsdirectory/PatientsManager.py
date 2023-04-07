@@ -43,6 +43,13 @@ class PatientsManager:
                                      "\n-------------------------\n")
 
     @classmethod
+    def update_doctor_with(cls,patient_id, doc_id):
+        for patient in cls._patients:
+            if patient._id == patient_id:
+                patient.current_doctor_id = doc_id
+
+
+    @classmethod
     def delete_patient(self, patient_id):
         patient = self.read_patient("_id", patient_id)
         self._patients.pop(patient_id)
