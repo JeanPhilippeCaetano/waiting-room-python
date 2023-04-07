@@ -1,6 +1,11 @@
 import unittest
 from Doctor import Doctor
 from DoctorsManager import DoctorsManager
+import logging
+import os
+
+logging.basicConfig(filename="logfilehospital.log", level=logging.DEBUG)
+logging.info("starting unit test doctor")
 
 
 class TestDoctor(unittest.TestCase):
