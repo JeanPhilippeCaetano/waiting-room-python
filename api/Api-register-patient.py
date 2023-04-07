@@ -11,7 +11,7 @@ def get_patient(patient_id):
     patient = pm.read_patient("_id",patient_id)[0]
     # If the patient is not found, returns an error message
     if patient is None:
-        return jsonify({'message': 'Patient not found'}), 40
+        return jsonify({'message': 'Patient not found'}), 404
     # Returns the patient in JSON format
     return jsonify({
         "name":patient._name,
@@ -60,7 +60,7 @@ def get_most_urgent_patient():
         '_age': most_urgent_patient._age,
         '_gender': most_urgent_patient._gender,
         '_arrival_date': most_urgent_patient._arrival_date,
-        '_state': most_urgent_patient._state.value,
+        '_state': pstate.InConsultation.value,
         '_priority': most_urgent_patient._priority
     }), 200
 
@@ -76,6 +76,9 @@ def update_patient(patient_id):
     # Get the updated patient data from the request JSON
     data = request.get_json()
     for key in data.keys():
+        if key == "_state":
+            if data[key] == "Consulted":
+                pm.update_patient(patient_id, "_state", pstate.Consulted)
         pm.update_patient(patient_id, key, data[key])
         setattr(patient, key, data[key])
     # Return the updated patient information with status code 200
