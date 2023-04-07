@@ -16,7 +16,7 @@ class PatientsManager:
         self._patients.append(patient)
         logging.info("\nPatient created in register: " + date_string + \
                      patient.__str__() + \
-                     "\n-------------------------")
+                     "\n-------------------------\n")
 
     @classmethod
     def read_patient(self, attribute_type=None, attribute_value=None):
@@ -33,11 +33,13 @@ class PatientsManager:
             if getattr(self._patients[patient_id], attribute_type) == pstate.PatientState.Consulted:
                 for patient in self._patients:
                     if patient_id is not patient._id:
+                        old_priority = patient._priority
                         patient._priority += 1
                         logging.info("\nPatient priority changed: " + date_string + \
                                      "\nName: " + patient._name + \
+                                     "\nOld priority: " + str(old_priority) + \
                                      "\nPriority: " + str(patient._priority) + \
-                                     "\n-------------------------")
+                                     "\n-------------------------\n")
 
     @classmethod
     def delete_patient(self, patient_id):
@@ -46,4 +48,4 @@ class PatientsManager:
         logging.info("\nPatient deleted: " + date_string + \
                      "\nName: " + patient._name + \
                      "\nPriority: " + str(patient._priority) + \
-                     "\n-------------------------")
+                     "\n-------------------------\n")

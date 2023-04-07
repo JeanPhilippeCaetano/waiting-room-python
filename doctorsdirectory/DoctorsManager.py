@@ -21,7 +21,7 @@ class DoctorsManager:
         cls._list.append(doctor)
         logging.info("\nDoctor created in register:" + date_string + \
                      doctor.__str__() + \
-                     "\n-------------------------")
+                     "\n-------------------------\n")
 
     @classmethod
     def update_busy_by_id(cls, doc_id):
@@ -31,5 +31,5 @@ class DoctorsManager:
                 logging.info("\nDoctor changed state:" + date_string + \
                              "\nName: " + doctor._name + \
                              "\nIs busy: " + doctor._is_busy + \
-                             "\n-------------------------")
+                             "\n-------------------------\n")
                 break

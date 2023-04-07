@@ -4,6 +4,7 @@ import datetime as dt
 
 logging.basicConfig(filename="logfilehospital.log", level=logging.DEBUG)
 
+
 class Doctor:
     _id_iter = itertools.count()
 

@@ -1,28 +1,55 @@
-import patientsdirectory.PatientsManager as pdm
-import patientsdirectory.Patient as pt
-import patientsdirectory.PatientState as pstate
+from patientsdirectory.PatientsManager import PatientsManager as pt_manager
+from patientsdirectory.Patient import Patient as pt
+from patientsdirectory.PatientState import PatientState as pt_state
+
+from doctorsdirectory.Doctor import Doctor as dt
+from doctorsdirectory.DoctorsManager import DoctorsManager as dt_manager
+import time
+from datetime import datetime
+
+
+
+def fake_activity():
+    patient = pt("test", 19, "M", 4, pt_state.Awaiting, datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+    pt_manager.create_patient(patient)
+
+    time.sleep(2)
+
+    patient2 = pt("gabite", 19, "M", 5, pt_state.Awaiting, datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+    pt_manager.create_patient(patient2)
+
+    time.sleep(2)
+
+    patient3 = pt("emiliana", 19, "M", 3, pt_state.Awaiting, datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+    pt_manager.create_patient(patient3)
+
+    time.sleep(2)
+
+    patient4 = pt("ttcion", 19, "M", 5, pt_state.Awaiting, datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+    pt_manager.create_patient(patient4)
+
+    for patient in pt_manager.read_patient():
+        print(patient._name, patient._priority)
+
+    time.sleep(2)
+
+    pt_manager.update_patient(2, "_state", pt_state.Consulted)
+
+    for patient in pt_manager.read_patient():
+        print(patient._name, patient._priority)
+
+    time.sleep(2)
+
+    doc = dt("robert", "Uretrologue")
+    dt_manager.add_doctor(doc)
+
+    time.sleep(2)
+
+    doc2 = dt("Mr Seguret", "biologie")
+    dt_manager.add_doctor(doc2)
+
 def main():
-    p_d_m = pdm.PatientsManager()
-    patient = pt.Patient("test",19,"M",4,pstate.PatientState.Awaiting,"19/05/21")
-    patient2 = pt.Patient("gabite",19,"M",5,pstate.PatientState.Awaiting,"18/05/21")
-    patient3 = pt.Patient("emiliana",19,"M",3,pstate.PatientState.Awaiting,"19/05/21")
-    patient4 = pt.Patient("ttcion",19,"M",5,pstate.PatientState.Awaiting,"19/05/21")
-    p_d_m.create_patient(patient)
-    p_d_m.create_patient(patient2)
-    p_d_m.create_patient(patient3)
-    p_d_m.create_patient(patient4)
-    t = p_d_m.read_patient()
-    for x in t:
-        print(x._name,x._priority)
-    p_d_m.update_patient(2,"_state",pstate.PatientState.Consulted)
-    s = p_d_m.read_patient()
-    for z in s:
-        print(z._name,z._priority)
-    from doctorsdirectory.Doctor import Doctor
-
-    doc = Doctor("robert", "Uretrologue")
-
-
+    fake_activity()
 
 if __name__ == '__main__':
     main()
