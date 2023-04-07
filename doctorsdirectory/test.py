@@ -30,8 +30,6 @@ class TestDoctor(unittest.TestCase):
 
 
 class TestDoctorsManager(unittest.TestCase):
-    def setUp(self):
-        DoctorsManager._list = []
 
     def test_get_doctors(self):
         doctor1 = Doctor("John Doe", "Pediatrics")

@@ -27,4 +27,3 @@ class PatientsManager:
     @classmethod
     def delete_patient(self, patient_id):
         self._patients.pop(patient_id)
-

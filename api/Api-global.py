@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from doctorsdirectory.DoctorsManager import DoctorsManager as dt_manager
 
 app = Flask(__name__)
 
@@ -133,3 +134,28 @@ def delete_patient(id):
         
     # If no patient with the given ID is found, return an error message
     return jsonify({'message': 'Patient not found'}), 404
+
+
+@app.route('/add-doctor', methods=['POST'])
+def add_doctor():
+    # Récupère les données du docteur à partir de la requête
+    doctor_data = request.get_json()
+
+    # Crée un nouveau docteur avec un ID, un nom, une spécialité et une date d'embauche
+    doctor = {
+        '_id_doctor': len(dt_manager.get_doctors()) + 1,
+        '_name': doctor_data['_name'],
+        '_specialty': doctor_data['_specialty'],
+        '_hire_date': doctor_data['_hire_date']
+    }
+
+    # Ajoute le nouveau docteur à la liste des docteurs
+    dt_manager.get_doctors().append(doctor)
+
+    # Renvoie le nouveau docteur au format JSON
+    return jsonify({
+        '_id_doctor': doctor['_id_doctor'],
+        '_name': doctor['_name'],
+        '_specialty': doctor['_specialty'],
+        '_hire_date': doctor['_hire_date']
+    }), 201
